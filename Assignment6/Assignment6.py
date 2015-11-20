@@ -22,27 +22,42 @@ class Node:
 
 def setupData():
 	data = Data()
-	data.getNode("P").setProbs(0.9)
-	data.getNode("S").setProbs(0.3)
-	data.getNode("C").addParent(data.getNode("P"))
-	data.getNode("C").addParent(data.getNode("S"))
-	data.getNode("C").setProbs({"PS":0.03, "P~S":0.001, "~PS":0.05, "~P~S":0.02,})
-	data.getNode("X").addParent(data.getNode("C"))
-	data.getNode("X").setProbs({"C":0.9, "~C":0.2})
-	data.getNode("D").addParent(data.getNode("C"))
-	data.getNode("D").setProbs({"C":0.65, "~C":0.3})
+	data.getNode("p").setProbs(0.9)
+	data.getNode("s").setProbs(0.3)
+	data.getNode("c").addParent(data.getNode("p"))
+	data.getNode("c").addParent(data.getNode("s"))
+	data.getNode("c").setProbs({"ps":0.03, "p~s":0.001, "~ps":0.05, "~p~s":0.02,})
+	data.getNode("x").addParent(data.getNode("c"))
+	data.getNode("x").setProbs({"c":0.9, "~c":0.2})
+	data.getNode("d").addParent(data.getNode("c"))
+	data.getNode("d").setProbs({"c":0.65, "~c":0.3})
 	return data
 
 def parseArgs(args):
-	for c in range(len(args)):
-		if args[c:c+1] == "~":
+	def lowercase(params):
+		allparams = [params]
+		for i in range(len(params)):
+			if (params[i] >= "A" and params[i] <= "Z"):
+				params[i] = "~"+params[i].lower()
+				allparams.append(params)
+				allparams.append()
 
-		if args[c:c+1] == "m"
+	params = []
+	c = 0
+	while c < len(args): 
+		if args[c:c+1] == "~":
+			if c+1 >= len(args) or (args[c+1:c+2] >= "A" and args[c+1:c+2] <= "Z"):
+				print("A lowercase character must follow ~")
+				return []
+			param = args[c:c+2]
+			c += 1
+		else:
+			param = args[c:c+1]
+		params.append(param)
 
 def computeMarginal(data, args):
-	if len(args) == 0:
-		return 0
-	for c in args:
+	niceArgs = parseArgs(args)
+	
 
 
 def main(argv):
